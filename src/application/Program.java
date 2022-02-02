@@ -36,25 +36,33 @@ public class Program {
 		Department department = new Department(departmentName);
 		Worker worker = new Worker(workerName, baseSalary, WorkerLevel.valueOf(workerLevel), department);
 
+		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
 		for (int i = 0; i < contractsInTotal; i++) {
-			System.out.println("Contract #" + (i+1));
-			SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+			System.out.println("Contract #" + (i + 1));
 			System.out.print("Date (DD/MM/YYYY): ");
 			String day = sc.next();
 			String month = sc.next();
 			String year = sc.next();
-			Date date = sdf1.parse(day +"/"+ month +"/"+ year);
-			
+			Date date = sdf1.parse(day + "/" + month + "/" + year);
+
 			System.out.print("Value per hour: ");
 			double valuePerHour = sc.nextDouble();
 
 			System.out.print("Duration (hours): ");
 			int hours = sc.nextInt();
-			
+
 			HourContract contract = new HourContract(date, valuePerHour, hours);
 			worker.addContract(contract);
 		}
-		System.out.println(worker.toString());
+
+		System.out.print("\nEnter month and year to calculate income (MM/YYYY): ");
+		String month = sc.next();
+		String year = sc.next();
+
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM/YYYY");
+		Date date = sdf2.parse(month + "/" + year);
+		
+		// 
 		
 		sc.close();
 	}
