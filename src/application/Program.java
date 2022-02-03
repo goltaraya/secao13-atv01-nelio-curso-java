@@ -15,7 +15,8 @@ public class Program {
 	public static void main(String[] args) throws ParseException {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
 		System.out.print("Enter department's name: ");
 		String departmentName = sc.nextLine();
 
@@ -36,14 +37,10 @@ public class Program {
 		Department department = new Department(departmentName);
 		Worker worker = new Worker(workerName, baseSalary, WorkerLevel.valueOf(workerLevel), department);
 
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
 		for (int i = 0; i < contractsInTotal; i++) {
-			System.out.println("Contract #" + (i + 1));
+			System.out.println("\nContract #" + (i + 1));
 			System.out.print("Date (DD/MM/YYYY): ");
-			String day = sc.next();
-			String month = sc.next();
-			String year = sc.next();
-			Date date = sdf1.parse(day + "/" + month + "/" + year);
+			Date contractDate = sdf.parse(sc.next());
 
 			System.out.print("Value per hour: ");
 			double valuePerHour = sc.nextDouble();
@@ -51,18 +48,18 @@ public class Program {
 			System.out.print("Duration (hours): ");
 			int hours = sc.nextInt();
 
-			HourContract contract = new HourContract(date, valuePerHour, hours);
+			HourContract contract = new HourContract(contractDate, valuePerHour, hours);
 			worker.addContract(contract);
 		}
 
 		System.out.print("\nEnter month and year to calculate income (MM/YYYY): ");
-		String month = sc.next();
-		String year = sc.next();
-
-		SimpleDateFormat sdf2 = new SimpleDateFormat("MM/YYYY");
-		Date date = sdf2.parse(month + "/" + year);
+		String monthAndYear = sc.next();
+		int month = Integer.parseInt(monthAndYear.substring(0, 2));
+		int year = Integer.parseInt(monthAndYear.substring(3, 7));
 		
-		// 
+		System.out.println("Name: " + worker.getName());
+		System.out.println("Department: " + worker.getDepartment().getName());
+		System.out.println("Total income for " + monthAndYear + ": " + worker.income(year, month));
 		
 		sc.close();
 	}
